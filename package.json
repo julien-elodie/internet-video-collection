@@ -1,0 +1,19 @@
+{
+  "name": "ivcollect",
+  "version": "1.0.0",
+  "description": "this project is about collecting videos on the internet",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julien-elodie/internet-video-collection.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julien-elodie/internet-video-collection/issues"
+  },
+  "homepage": "https://github.com/julien-elodie/internet-video-collection#readme"
+}
