@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/julien-elodie/internet-video-collection/issues"
   },
-  "homepage": "https://github.com/julien-elodie/internet-video-collection#readme"
+  "homepage": "https://github.com/julien-elodie/internet-video-collection#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "fs": "0.0.1-security",
+    "request": "^2.81.0",
+    "superagent": "^3.5.2"
+  }
 }
