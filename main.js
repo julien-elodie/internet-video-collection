@@ -139,7 +139,6 @@ superagent
                     // check whether each category has 100 video url
                     selfCount++;
                     // console.log(selfCount);
-                    if (selfCount < 100 && selfCount % 20 == 0) {}
 
                     fs.appendFile(savePath + c_label + '/' + 'url.txt', 'child_path: ' + m_href + '\n', function(err) {
                         if (err) {
