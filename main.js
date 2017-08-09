@@ -97,10 +97,20 @@ superagent
 
                 var selfCount = 0;
 
-                // TODO
+                /*
                 href = c_href.split(/[/?]/)
                 href.splice(4, 3, 'ajax', ['?type=', href[4].toLowerCase(), '&_type=1&', href[6], '&page=', '5'].join(''));
                 href = href.join('/');
+                */
+
+                var hrefs = [];
+
+                for (var i = 1; i <= 5; i++) {
+                    href = c_href.split(/[/?]/)
+                    href.splice(4, 3, 'ajax', ['?type=', href[4].toLowerCase(), '&_type=1&', href[6], '&page=', i].join(''));
+                    href = href.join('/');
+                    hrefs[i] = href;
+                }
 
                 // console.log(href);
 
@@ -118,7 +128,7 @@ superagent
                 };
 
                 // get src
-                getVideoSrc(href, headers, function(m_label, m_href) {
+                getVideoSrc(hrefs, headers, function(m_label, m_href) {
                     href = Number(m_href).toString(16);
                     m_href = "http://v.hoto.cn/" + href.substring(href.length - 2, href.length) + "/" + href.substring(href.length - 4, href.length - 2) + "/" + m_href + ".mp4";
 
@@ -139,13 +149,13 @@ superagent
                         }
                     });
 
-                    /*
+                    // /*
                     totalCount++;
                     downloadVideo(m_href, m_label, function(_filename) {
                         finishCount++;
                         console.log('[' + finishCount + ']:' + _filename + ' is downloaded');
                     })
-                    */
+                    // */
                 })
             });
         });
@@ -154,19 +164,20 @@ superagent
 
 // get src function
 var getVideoSrc = function(url, header, callback) {
-    superagent
-        .get(url)
-        .set(header)
-        .end(function(err, res) {
-            // transform JSON data
-            var text = JSON.parse(res.text);
-            // console.log(text.result.html);
+    for (var i = 1; i <= 5; i++) {
+        superagent
+            .get(url[i])
+            .set(header)
+            .end(function(err, res) {
+                // transform JSON data
+                var text = JSON.parse(res.text);
+                // console.log(text.result.html);
 
-            // get html page
-            var $ = cheerio.load(text.result.html);
+                // get html page
+                var $ = cheerio.load(text.result.html);
 
-            // get video
-            $('li').each(function(item) {
+                // get video
+                $('li').each(function(item) {
                     var table_l = $(this).find('h2');
                     var m_label = table_l.text();
                     var table_h = $(this).find('a');
@@ -175,23 +186,8 @@ var getVideoSrc = function(url, header, callback) {
                     // console.log(m_label, m_href);
                     callback(m_label, m_href);
                 })
-                /*
-                // get video table
-                $('#list.vedio_table').each(function(item) {
-                    var tables = $(this).find('li');
-
-                    tables.each(function(item) {
-                        var table_l = $(this).find('h2');
-                        var m_label = table_l.text();
-                        var table_h = $(this).find('a');
-                        var m_href = table_h.attr('href').split(/[a-zA-Z/]+/)[1];
-
-                        // console.log(m_label, m_href);
-                        callback(m_label, m_href);
-                    })
-                })
-                */
-        });
+            })
+    };
 };
 
 // download video
